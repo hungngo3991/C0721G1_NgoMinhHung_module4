@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+<table>
+    <tr th:each="medical,item:${medicalList}">
+        <td th:text="${item.count}"></td>
+        <td th:text="${medical.name}"></td>
+        <td th:text="${medical.birthday}"></td>
+        <td th:text="${medical.gender}"></td>
+        <td th:text="${medical.nationality}"></td>
+        <td th:text="${medical.identityCard}"></td>
+        <td th:text="${medical.travelInfo}"></td>
+        <td th:text="${medical.idVehicle}"></td>
+        <td th:text="${medical.idSeat}"></td>
+        <td th:text="${medical.startDate}"></td>
+        <td th:text="${medical.endDate}"></td>
+        <td th:text="${medical.address}"></td>
+        <td th:text="${medical.phone}"></td>
+        <td th:text="${medical.email}"></td>
+
+    </tr>
+</table>
+<!--<footer th:replace="/layout :: footer"></footer>-->
+</body>
+</html>

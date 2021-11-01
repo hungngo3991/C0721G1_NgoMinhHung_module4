@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<form th:action="@{/index}" th:object="${medical}" method="POST" novalidate="novalidate">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="header" style="text-align: center">
+        <h2>TỜ KHAI Y TẾ</h2>
+        <h3>ĐÂY LÀ TÀI LIỆU QUAN TRỌNG, THÔNG TIN CỦA ANH/CHỊ SẼ GIÚP CƠ QUAN Y TẾ LIÊN LẠC KHI CẦN THIẾT ĐỂ
+            PHÒNG CHỐNG DỊCH BỆNH TRUYỀN NHIỄM</h3>
+        <div style="color: red;font-weight: bolder">Khuyến cáo: Khai báo thông tin sai là vi phạm pháp luật Việt Nam và
+            có thể xử lý hình sự
+        </div>
+    </div>
+
+    <p>Họ tên (ghi chữ IN HOA)<span>(*)</span></p>
+    <input type="text" th:field="*{name}">
+
+
+    <p>Năm sinh<span>(*)</span></p>
+    <input type="text" th:field="*{birthday}">
+
+    <p>Giới tính<span>(*)</span></p>
+    <select th:field="*{gender}">
+        <option value="choice">-Chọn-</option>
+        <option value="1">Nam</option>
+        <option value="0">Nữ</option>
+    </select>
+
+    <p>Quốc tịch<span>(*)</span></p>
+    <select th:field="*{nationality}">
+        <option value="vietnam">Việt Nam</option>
+        <option value="usa">USA</option>
+        <option value="uk">UK</option>
+    </select>
+
+    <p>Số hộ chiếu hoặc số CMND hoặc giấy thông hành hợp pháp khác<span>(*)</span></p>
+    <input type="text" th:field="*{identityCard}">
+
+    <p>Thông tin đi lại<span>(*)</span></p>
+    <input type="radio" th:field="*{travelInfo}" value="taubay">Tàu bay
+    <input type="radio" th:field="*{travelInfo}" value="tauthuyen">Tàu thuyền
+    <input type="radio" th:field="*{travelInfo}" value="oto">Ô tô
+    <input type="radio" th:field="*{travelInfo}" value="khac">Khác (Ghi rõ)
+
+
+    <p>Số hiệu phương tiện</p>
+    <input type="text" th:field="*{idVehicle}" placeholder="VD: VN123">
+
+    <p>Số ghế</p>
+    <input type="text" th:field="*{idSeat}">
+
+    <p>Ngày khởi hành<span>(*)</span></p>
+    <input type="date" th:field="*{startDate}">
+
+    <p>Ngày kết thúc<span>(*)</span></p>
+    <input type="date" th:field="*{endDate}">
+
+
+    <p>Địa chỉ nơi ở<span>(*)</span></p>
+    <input type="text" th:field="*{address}">
+
+    <p>Điện thoại<span>(*)</span></p>
+    <input type="text" th:field="*{phone}">
+
+    <p>Email<span>(*)</span></p>
+    <input type="text" th:field="*{email}">
+
+    <p>Trong vòng 14 ngày qua, Anh/Chị có thấy xuất hiện triệu chứng nào sau đây không? <span>(*)</span></p>
+
+    <span>Sốt</span>
+    <input type="checkbox" th:field="*{symptom}" value="sot">
+
+    <span>Nôn/buồn nôn</span>
+    <input type="checkbox" th:field="*{symptom}" value="buonnon">
+
+    <span>Ho</span>
+    <input type="checkbox" th:field="*{symptom}" value="ho">
+
+    <span>Tiêu chảy</span>
+    <input type="checkbox" th:field="*{symptom}" value="tieuchay">
+
+    <span>Khó thở</span>
+    <input type="checkbox" th:field="*{symptom}" value="khotho">
+
+    <span>Xuất huyết ngoài da</span>
+    <input type="checkbox" th:field="*{symptom}" value="xuathuyet">
+
+
+    <span>Đau họng</span>
+    <input type="checkbox" th:field="*{symptom}" value="dauhong">
+
+    <span>Nổi ban ngoài da</span>
+    <input type="checkbox" th:field="*{symptom}" value="noiban">
+
+
+    <p>Lịch sử phơi nhiễm: trong vòng 14 ngày qua Anh/Chị có: <span>(*)</span></p>
+
+
+    <p>Đến trang trại chăn nuôi/chợ buôn bán động vật sống/cơ sở giết mổ động vật/tiếp xúc động vật<span>(*)</span></p>
+    <input type="checkbox" th:field="*{exposureHistory}" value="dongvat">
+
+
+    <p>Tiếp xúc gần (<2m) với người mắc bênh viêm đường hô hấp do nCoV<span>(*)</span></p>
+    <input type="checkbox" th:field="*{exposureHistory}" value="hohap">
+
+
+    <p style="color: red">Dữ liệu bạn cung cấp hoàn toàn bảo mật và chỉ phục vụ cho việc phòng chống dịch,
+        thuộc quản lý của Ban chỉ đạo quốc gia về Phòng chống dịch Covid-19.
+        Khi bạn nhấn nút "Gửi" là bạn đã hiểu và đồng ý.</p>
+    <div style="text-align: center">
+        <input type="submit" value="GỬI TỜ KHAI">
+    </div>
+
+</form>
+</body>
+</html>
