@@ -23,10 +23,6 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 
     implementation group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
-    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.10'
-    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.10'
-    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.10'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.10'
 
 
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.22'
@@ -34,6 +30,16 @@ dependencies {
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.4.3.Final'
 
     implementation group: 'org.webjars.bower', name: 'jquery', version: '3.5.1'
+
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.10'
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.10'
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.10'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.10'
+
+
+}
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
 test {

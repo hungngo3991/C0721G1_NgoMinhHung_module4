@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="container">
+    <h3>Edit Music</h3>
+    <p>
+        <a th:href="@{/music}">
+            Back to list music
+        </a>
+    </p>
+    <div class="row">
+        <div class="col-6">
+            <form th:action="@{/music/update}" th:object="${musicForm}" method="post" enctype="multipart/form-data">
+                <input type="hidden" th:field="*{id}">
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="name" class="form-label">Name</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="name" th:field="*{name}">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="artist" class="form-label">Artist</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" class="form-control" id="artist" th:field="*{artist}">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="typeOfMusic" class="form-label">Type of music</label>
+                        </div>
+                        <div class="col-8">
+                            <select th:field="*{typeOfMusic}" id="typeOfMusic">
+                                <option th:each="typeMusic : ${typeOfMusic}" th:value="${typeMusic}"
+                                        th:text="${typeMusic}">
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="filePath" class="form-label">File path</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="file" class="form-control" id="filePath" th:field="*{filePath}">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

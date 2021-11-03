@@ -13,9 +13,62 @@
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+            crossorigin="anonymous"></script>
+
 
 </head>
 <body>
+<div class="container">
+    <h3>Simple music player</h3>
+    <p>
+        <a th:href="@{/music/create}">
+            Add new music
+        </a>
+    </p>
+    <p th:if="${message}">
+        <span th:text="${message}"></span>
+    </p>
+    <div class="container">
+        <table class="table">
+            <thead class="thead-inverse">
+            <tr>
+                <th>Name</th>
+                <th>Artist</th>
+                <th>Type of music</th>
+                <th>File path</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="music : ${musicList}">
+                <td th:text="${music.name}"></td>
+                <td th:text="${music.artist}"></td>
+                <td th:text="${music.typeOfMusic}"></td>
+                <td><a th:href="@{'C:/file_upload/' + ${music.filePath}}"><span th:text="${music.name}"></span></a></td>
+                <td>
+                    <a th:href="@{/music/{id}/edit (id=${music.id})}" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    <button th:onclick="|change('${music.id}','${music.name}')|" type="button" class="btn btn-danger"
+                            data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        Delete
+                    </button>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function change(id, name) {
+        alert(id + name);
+    }
+</script>
 
 </body>
 </html>

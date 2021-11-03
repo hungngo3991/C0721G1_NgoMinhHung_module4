@@ -30,8 +30,8 @@ public class MusicServiceImpl implements IMusicService {
     }
 
     @Override
-    public Music update(Music music) {
-        return musicRepository.update(music);
+    public void update(Music music) {
+        musicRepository.update(music);
     }
 
     @Override

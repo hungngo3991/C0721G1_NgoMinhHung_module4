@@ -21,7 +21,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebMvc
 @ComponentScan("controller")
-public class AppConfiguration implements WebMvcConfigurer,  ApplicationContextAware {
+public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAware {
 
     @Value("${file_upload}")
     private String fileUpload;
@@ -34,8 +34,6 @@ public class AppConfiguration implements WebMvcConfigurer,  ApplicationContextAw
     }
 
 
-
-//    Thymeleaf setting
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
@@ -63,7 +61,6 @@ public class AppConfiguration implements WebMvcConfigurer,  ApplicationContextAw
     }
 
 
-    //Upload file Setting
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/file_upload/**")
