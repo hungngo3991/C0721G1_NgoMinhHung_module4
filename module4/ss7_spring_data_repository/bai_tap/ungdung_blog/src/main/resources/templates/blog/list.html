@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a th:href="@{/blog/create}"> Add New Blog</a>
+<form>
+    <label>
+        <input type="search" name="titleSearch" placeholder="Search By Title">
+    </label>
+    <label>
+        <select name="idCategorySearch">
+            <option value="" selected>Search By Category</option>
+            <option th:each="category : ${categories}" th:value="${category.id}"
+                    th:text="${category.name}"></option>
+        </select>
+    </label>
+    <input type="submit" value="Search">
+</form>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="blog : ${blogList}">
+        <td th:text="${blog.id}"></td>
+        <td th:text="${blog.title}"></td>
+        <td th:text="${blog.content}"></td>
+        <td th:text="${blog.category.name}"></td>
+        <td th:text="${blog.date}"></td>
+        <td>
+            <a th:href="@{/blog/edit/{id}(id=${blog.id})}">
+                <button class="btn btn-primary">Edit
+                </button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/blog/delete/{id}(id=${blog.id})}">
+                <button class="btn btn-primary">Delete
+                </button>
+            </a>
+        </td>
+    </tr>
+</table>
+
+<div>
+    <a th:href="@{'/blog'(page = ${blogList.number - 1}, titleSearch = ${titleSearch}, idCategorySearch = ${idCategorySearch})}"
+       th:if="${blogList.hasPrevious()}">Previous</a>
+    <span th:text="${blogList.number + 1}"></span> / <span th:text="${blogList.totalPages}"></span>
+    <a th:href="@{'/blog'(page = ${blogList.number + 1}, titleSearch = ${titleSearch}, idCategorySearch = ${idCategorySearch} )}"
+       th:if="${blogList.hasNext()}">Next</a>
+</div>
+
+<a th:href="@{/blog}"> Return Blog List</a>
+</body>
+</html>
