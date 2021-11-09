@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <p>
+            <a href="/product">Back to product</a>
+        </p>
+
+        <h1 style="color: blue">Cart</h1>
+    </div>
+
+    <div class="content">
+        <form th:object="${cart}" method="post">
+
+
+            <h4>Products:
+                <span th:text="${cart.countProduct()}"></span>
+            </h4>
+
+            <h4>Total Quantity:
+                <span th:text="${cart.countTotal()}"></span>
+            </h4>
+
+            <div>
+                <div th:each="product : ${cart.products}">
+                    <div>
+                        <img th:src="${product.getKey().image}" th:alt="${product.getKey().name}">
+                    </div>
+
+                    <div>
+                        <h5 th:text="${product.getKey().name}"></h5>
+                        <p th:text="${ 'ID Product: ' + product.getKey().id}"></p>
+                        <p th:text="${ 'Price: $' + product.getKey().price}"></p>
+                        <p>
+                            Quantity:
+                            <a th:href="@{/sub/__${product.getKey().id}__(action='show')}" th:text="${'-'}"></a>
+                            <span th:text="${product.getValue()}"></span>
+                            <a th:href="@{/add/__${product.getKey().id}__(action='show')}" th:text="${'+'}"></a>
+                        </p>
+                        <p>
+                            <a th:href="@{/remove/__${product.getKey().id}__(action='show')}">Remove</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div>
+                <h5 th:if="${cart.countPayment() > 0}"
+                    th:text="${'Total money: $' + cart.countPayment()}"></h5>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
