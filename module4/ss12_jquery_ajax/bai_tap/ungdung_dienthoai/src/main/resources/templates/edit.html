@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Phone</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<h1>Edit Phone </h1>
+<a style="color: blue" th:href="@{/smartphones}">Return to Phone List</a>
+<div>
+    <div id="smartPhone"></div>
+</div>
+<form id="spForm" th:object="${smartphone}">
+    <table>
+        <tr>
+            <td>Producer:</td>
+            <td>
+                <select th:field="*{producer}">
+                    <option value="Oppo" th:checked="*{producer.equals('Oppo')}">Oppo</option>
+                    <option value="Samsung" th:checked="*{producer.equals('Samsung')}">Samsung</option>
+                    <option value="Nokia" th:checked="*{producer.equals('Nokia')}">Nokia</option>
+                    <option value="Blackberry" th:checked="*{producer.equals('Blackberry')}">Blackberry</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Model</td>
+            <td><input type="text" th:field="*{model}"></td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td><input type="text" th:field="*{price}"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Update</button>
+            </td>
+        </tr>
+    </table>
+</form>
+<script>
+    $(document).ready(function () {
+        $("#spForm").submit(function (event) {
+            let producer = $("#producer").val();
+            let model = $("#model").val();
+            let price = $("#price").val();
+            let json = {"producer": producer, "model": model, "price": price};
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(json),
+                url: $(this).attr("action"),
+                success: function (smartphone) {
+                    let response = "";
+                    response += "<span style='color: red' class='success'>Smartphone has been updated successfully: [";
+                    response += smartphone.producer + " : ";
+                    response += smartphone.model + " : ";
+                    response += smartphone.price + "]</span>"
+                    $("#smartPhone").html(response);
+                }
+            });
+            event.preventDefault();
+        });
+    });
+</script>
+</body>
+</html>
