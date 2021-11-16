@@ -1,7 +1,5 @@
 package com.codegym.casestudy.model;
 
-import org.springframework.stereotype.Service;
-
 import javax.persistence.*;
 import java.util.Set;
 
