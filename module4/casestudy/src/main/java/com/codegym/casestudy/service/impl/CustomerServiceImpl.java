@@ -6,10 +6,12 @@ import com.codegym.casestudy.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CustomerServiceImpl implements ICustomerService {
 
     @Autowired
@@ -18,8 +20,10 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public Page<Customer> findAll(Pageable pageable, String customer_name, String customer_phone, String customer_type_id) {
-        return customerRepository.findAll(pageable, "%" + customer_name + "%", "%" + customer_phone + "%", "%" + customer_type_id + "%");
+        return customerRepository.findAll(pageable, "%" + customer_name + "%", "%" + customer_phone
+                + "%", "%" + customer_type_id + "%");
     }
+
 
     @Override
     public List<Customer> findAll() {

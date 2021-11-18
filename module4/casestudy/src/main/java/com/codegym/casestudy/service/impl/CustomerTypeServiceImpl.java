@@ -4,10 +4,11 @@ import com.codegym.casestudy.model.CustomerType;
 import com.codegym.casestudy.repository.ICustomerTypeRepository;
 import com.codegym.casestudy.service.ICustomerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class CustomerTypeServiceImpl implements ICustomerTypeService {
 
     @Autowired
@@ -32,4 +33,8 @@ public class CustomerTypeServiceImpl implements ICustomerTypeService {
     public void remove(Long id) {
         customerTypeRepository.deleteById(id);
     }
+
+
+
+
 }

@@ -3,7 +3,8 @@ package com.codegym.casestudy.service;
 import java.util.List;
 import java.util.Optional;
 
-public interface IGeneralService<T>{
+
+public interface IGeneralService<T> {
     List<T> findAll();
 
     Optional<T> findById(Long id);
@@ -11,4 +12,6 @@ public interface IGeneralService<T>{
     void save(T t);
 
     void remove(Long id);
+
+
 }

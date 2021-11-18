@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Customer</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h2>Add New Customer</h2>
+
+<form th:action="@{/customer/save}" th:object="${customer}" method="post">
+    <div>
+        <label for="customerName">Customer Name:</label>
+        <input id="customerName" type="text" th:field="*{customerName}">
+    </div>
+    <div>
+        <label for="customerBirthday">Customer Birthday:</label>
+        <input id="customerBirthday" type="text" th:field="*{customerBirthday}">
+    </div>
+    <div>
+        <label for="customerGender">Customer Gender:</label>
+        <input id="customerGender" type="text" th:field="*{customerGender}">
+    </div>
+    <div>
+        <label for="customerIdCard">Customer Id Card:</label>
+        <input id="customerIdCard" type="text" th:field="*{customerIdCard}">
+    </div>
+    <div>
+        <label for="customerPhone">Customer Phone:</label>
+        <input id="customerPhone" type="text" th:field="*{customerPhone}">
+    </div>
+    <div>
+        <label for="customerEmail">Customer Email:</label>
+        <input id="customerEmail" type="text" th:field="*{customerEmail}">
+    </div>
+    <div>
+        <label for="customerAddress">Customer Address:</label>
+        <input id="customerAddress" type="text" th:field="*{customerAddress}">
+    </div>
+    <div>
+        <label>Customer Type:</label>
+        <label>
+            <select th:field="*{customerType.customerTypeId}">
+                <option th:each="customerType : ${customerTypes}" th:text="${customerType.customerTypeName}"
+                        th:value="${customerType.customerTypeId}"></option>
+            </select>
+        </label>
+    </div>
+    <input type="submit" value="Create">
+</form>
+
+<a th:href="@{/customer}"> Return Customer List</a>
+
+<div style="color: red">
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+</div>
+</body>
+</html>

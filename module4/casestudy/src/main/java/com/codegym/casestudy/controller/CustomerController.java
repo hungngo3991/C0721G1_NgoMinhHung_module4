@@ -10,11 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
+
 import java.util.List;
 
 
@@ -32,20 +32,27 @@ public class CustomerController {
         return customerTypeService.findAll();
     }
 
-    @GetMapping("")
-    public ModelAndView listCustomer(
-            @PageableDefault(value = 2, sort = "customerId", direction = Sort.Direction.ASC) Pageable pageable,
-            @RequestParam(value = "customerName", defaultValue = "", required = false) String customerName,
-            @RequestParam(value = "customerPhone", defaultValue = "", required = false) String customerPhone,
-            @RequestParam(value = "customerType", defaultValue = "", required = false) String customerTypeId) {
+
+    public ModelAndView getList(@PageableDefault(2) Pageable pageable, @RequestParam(value = "customerName", defaultValue = "", required = false) String customerName, @RequestParam(value = "customerPhone", defaultValue = "", required = false) String customerPhone, @RequestParam(value = "customerTypeId", defaultValue = "", required = false) String customerTypeId) {
         Page<Customer> customers = customerService.findAll(pageable, customerName, customerPhone, customerTypeId);
         ModelAndView modelAndView = new ModelAndView("/customer/list");
         modelAndView.addObject("customerName", customerName);
         modelAndView.addObject("customerPhone", customerPhone);
-        modelAndView.addObject("customerType", customerTypeId);
+        modelAndView.addObject("customerTypeId", customerTypeId);
         modelAndView.addObject("customers", customers);
         return modelAndView;
     }
+
+
+    @GetMapping("")
+    public ModelAndView listCustomer(
+            @PageableDefault(value = 2) Pageable pageable,
+            @RequestParam(value = "customerName", defaultValue = "", required = false) String customerName,
+            @RequestParam(value = "customerPhone", defaultValue = "", required = false) String customerPhone,
+            @RequestParam(value = "customerTypeId", defaultValue = "", required = false) String customerTypeId) {
+        return getList(pageable, customerName, customerPhone, customerTypeId);
+    }
+
 
     @GetMapping("/create")
     public ModelAndView createCustomerForm() {
@@ -65,6 +72,34 @@ public class CustomerController {
         modelAndView.addObject("customers", customers);
         modelAndView.addObject("message", "Create a new successful customer!");
         return modelAndView;
+    }
+
+    @GetMapping("/edit/{id}")
+    public ModelAndView showFormEdit(@PathVariable Long id) {
+
+        ModelAndView modelAndView = new ModelAndView("/customer/edit");
+        modelAndView.addObject("customer", customerService.findById(id).get());
+
+        return modelAndView;
+    }
+
+    @PostMapping("/update")
+    public ModelAndView update(@ModelAttribute Customer customer) {
+        customerService.save(customer);
+        List<Customer> customers = customerService.findAll();
+        ModelAndView modelAndView = new ModelAndView("/customer/edit");
+        modelAndView.addObject("customers", customers);
+        modelAndView.addObject("message", "Update customer successful!");
+        return modelAndView;
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable Long id, @PageableDefault(value = 2) Pageable pageable,
+                               @RequestParam(value = "customerName", defaultValue = "", required = false) String customerName,
+                               @RequestParam(value = "customerPhone", defaultValue = "", required = false) String customerPhone,
+                               @RequestParam(value = "customerTypeId", defaultValue = "", required = false) String customerTypeId) {
+        customerService.remove(id);
+        return getList(pageable, customerName, customerPhone, customerTypeId);
     }
 
 
