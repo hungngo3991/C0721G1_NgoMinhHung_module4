@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Service</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h2>Add New Service</h2>
+
+<form th:action="@{/service/save}" th:object="${service}" method="post">
+    <div>
+        <label for="serviceName">Service Name:</label>
+        <input id="serviceName" type="text" th:field="*{serviceName}">
+    </div>
+    <div>
+        <label for="serviceArea">Service Area:</label>
+        <input id="serviceArea" type="text" th:field="*{serviceArea}">
+    </div>
+    <div>
+        <label for="serviceCost">Service Cost:</label>
+        <input id="serviceCost" type="text" th:field="*{serviceCost}">
+    </div>
+    <div>
+        <label for="serviceMaxPeople">Service Max People:</label>
+        <input id="serviceMaxPeople" type="text" th:field="*{serviceMaxPeople}">
+    </div>
+    <div>
+        <label for="standardRoom">Standard Room:</label>
+        <input id="standardRoom" type="text" th:field="*{standardRoom}">
+    </div>
+    <div>
+        <label for="descriptionOtherConvenience">Description Other Convenience:</label>
+        <input id="descriptionOtherConvenience" type="text" th:field="*{descriptionOtherConvenience}">
+    </div>
+    <div>
+        <label for="poolArea">Pool Area:</label>
+        <input id="poolArea" type="text" th:field="*{poolArea}">
+    </div>
+    <div>
+        <label for="numberOfFloors">Number Of Floors:</label>
+        <input id="numberOfFloors" type="text" th:field="*{numberOfFloors}">
+    </div>
+    <div>
+        <label>Service Type:</label>
+        <label>
+            <select th:field="*{serviceType.serviceTypeId}">
+                <option th:each="serviceType : ${serviceTypes}" th:text="${serviceType.serviceTypeName}"
+                        th:value="${serviceType.serviceTypeId}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Rent Type:</label>
+        <label>
+            <select th:field="*{rentType.rentTypeId}">
+                <option th:each="rentType : ${rentTypes}" th:text="${rentType.rentTypeName}"
+                        th:value="${rentType.rentTypeId}"></option>
+            </select>
+        </label>
+    </div>
+    <input type="submit" value="Create">
+</form>
+
+<a th:href="@{/home}"> Return Home</a>
+
+<div style="color: red">
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+</div>
+</body>
+</html>

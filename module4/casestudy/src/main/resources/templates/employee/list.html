@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<a th:href="@{/employee/create}"> Add New Employee</a>
+<form>
+    <label>
+        <input type="search" name="employeeName" placeholder="Search By Name">
+    </label>
+    <label>
+        <input type="search" name="employeePhone" placeholder="Search By Phone">
+    </label>
+    <label>
+        <select name="positionId">
+            <option value="" selected>Search By Position</option>
+            <option th:each="position : ${positions}" th:value="${position.positionId}"
+                    th:text="${position.positionName}"></option>
+        </select>
+    </label>
+    <input type="submit" value="Search">
+</form>
+<table class="table table-bordered">
+    <thead class="thead-light">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Birhday</th>
+        <th>Id Card</th>
+        <th>Salary</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Position</th>
+        <th>Education Degree</th>
+        <th>Division</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.employeeId}"></td>
+        <td th:text="${employee.employeeName}"></td>
+        <td th:text="${employee.employeeBirthday}"></td>
+        <td th:text="${employee.employeeIdCard}"></td>
+        <td th:text="${employee.employeeSalary}"></td>
+        <td th:text="${employee.employeePhone}"></td>
+        <td th:text="${employee.employeeEmail}"></td>
+        <td th:text="${employee.employeeAddress}"></td>
+        <td th:text="${employee.position.positionName}"></td>
+        <td th:text="${employee.educationDegree.educationDegreeName}"></td>
+        <td th:text="${employee.division.divisionName}"></td>
+        <td>
+            <a th:href="@{/employee/edit/{id}(id=${employee.employeeId})}">
+                <button class="btn btn-primary">Edit
+                </button>
+            </a>
+        </td>
+        <td>
+            <a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}">
+                <button class="btn btn-primary">Delete
+                </button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <a th:href="@{'/employee'(page = ${employees.number - 1}, employeeName = ${employeeName}, employeePhone = ${employeePhone}, positionId = ${positionId} )}"
+       th:if="${employees.hasPrevious()}">Previous</a>
+    <span th:text="${employees.number + 1}"></span> / <span th:text="${employees.totalPages}"></span>
+    <a th:href="@{'/employee'(page = ${employees.number + 1}, employeeName = ${employeeName}, employeePhone = ${employeePhone}, positionId = ${positionId} )}"
+       th:if="${employees.hasNext()}">Next</a>
+</div>
+
+<div>
+    <a th:href="@{/employee}"> Return Employee List</a>
+</div>
+<div>
+    <a th:href="@{/home}"> Return Home</a>
+</div>
+</body>
+</html>

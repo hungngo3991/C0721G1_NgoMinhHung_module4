@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Employee</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h2>Add New Employee</h2>
+
+<form th:action="@{/employee/save}" th:object="${employee}" method="post">
+    <div>
+        <label for="employeeName">Employee Name:</label>
+        <input id="employeeName" type="text" th:field="*{employeeName}">
+    </div>
+    <div>
+        <label for="employeeBirthday">Employee Birthday:</label>
+        <input id="employeeBirthday" type="text" th:field="*{employeeBirthday}">
+    </div>
+    <div>
+        <label for="employeeIdCard">Employee Id Card:</label>
+        <input id="employeeIdCard" type="text" th:field="*{employeeIdCard}">
+    </div>
+    <div>
+        <label for="employeeSalary">Employee Salary:</label>
+        <input id="employeeSalary" type="text" th:field="*{employeeSalary}">
+    </div>
+    <div>
+        <label for="employeePhone">Employee Phone:</label>
+        <input id="employeePhone" type="text" th:field="*{employeePhone}">
+    </div>
+    <div>
+        <label for="employeeEmail">Employee Email:</label>
+        <input id="employeeEmail" type="text" th:field="*{employeeEmail}">
+    </div>
+    <div>
+        <label for="employeeAddress">Employee Address:</label>
+        <input id="employeeAddress" type="text" th:field="*{employeeAddress}">
+    </div>
+    <div>
+        <label>Position:</label>
+        <label>
+            <select th:field="*{position.positionId}">
+                <option th:each="position : ${positions}" th:text="${position.positionName}"
+                        th:value="${position.positionId}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Education Degree:</label>
+        <label>
+            <select th:field="*{educationDegree.educationDegreeId}">
+                <option th:each="educationDegree : ${educationDegrees}" th:text="${educationDegree.educationDegreeName}"
+                        th:value="${educationDegree.educationDegreeId}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Division:</label>
+        <label>
+            <select th:field="*{division.divisionId}">
+                <option th:each="division : ${divisions}" th:text="${division.divisionName}"
+                        th:value="${division.divisionId}"></option>
+            </select>
+        </label>
+    </div>
+    <input type="submit" value="Create">
+</form>
+
+<a th:href="@{/employee}"> Return Employee List</a>
+
+<div style="color: red">
+    <th:block th:if="${message}">
+        <p th:text="${message}"></p>
+    </th:block>
+</div>
+</body>
+</html>
