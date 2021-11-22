@@ -20,30 +20,53 @@
 
 <h2>Add New Customer</h2>
 
-<form th:action="@{/customer/save}" th:object="${customer}" method="post">
+<form th:action="@{/customer/save}" th:object="${customerDto}" method="post">
+    <div>
+        <label for="customerCode">Customer code: </label>
+        <input id="customerCode" type="text" th:field="*{customerCode}">
+        <div id="customerCodeE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('customerCode')}" th:errors="*{customerCode}">
+        </div>
+    </div>
     <div>
         <label for="customerName">Customer Name:</label>
         <input id="customerName" type="text" th:field="*{customerName}">
+        <div id="customerNameE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}">
+        </div>
     </div>
     <div>
         <label for="customerBirthday">Customer Birthday:</label>
-        <input id="customerBirthday" type="text" th:field="*{customerBirthday}">
+        <input id="customerBirthday" type="date" th:field="*{customerBirthday}">
+        <div id="customerBirthdayE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('customerBirthday')}" th:errors="*{customerBirthday}">
+        </div>
     </div>
     <div>
-        <label for="customerGender">Customer Gender:</label>
-        <input id="customerGender" type="text" th:field="*{customerGender}">
+        <label>Customer Gender:</label>
+        <input type="radio" th:field="*{customerGender}" value="1" required/>Male
+        <input type="radio" th:field="*{customerGender}" value="0" required/>Female
     </div>
     <div>
         <label for="customerIdCard">Customer Id Card:</label>
         <input id="customerIdCard" type="text" th:field="*{customerIdCard}">
+        <div id="customerIdCardE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('customerIdCard')}" th:errors="*{customerIdCard}">
+        </div>
     </div>
     <div>
         <label for="customerPhone">Customer Phone:</label>
         <input id="customerPhone" type="text" th:field="*{customerPhone}">
+        <div id="customerPhoneE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('customerPhone')}" th:errors="*{customerPhone}">
+        </div>
     </div>
     <div>
         <label for="customerEmail">Customer Email:</label>
         <input id="customerEmail" type="text" th:field="*{customerEmail}">
+        <div id="customerEmailE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('customerEmail')}" th:errors="*{customerEmail}">
+        </div>
     </div>
     <div>
         <label for="customerAddress">Customer Address:</label>
@@ -63,10 +86,6 @@
 
 <a th:href="@{/customer}"> Return Customer List</a>
 
-<div style="color: red">
-    <th:block th:if="${message}">
-        <p th:text="${message}"></p>
-    </th:block>
-</div>
+
 </body>
 </html>

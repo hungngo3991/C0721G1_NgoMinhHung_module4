@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Furama</title>
@@ -31,13 +31,18 @@
 
 
 <body style="background-color: black; background-size: cover">
+
+<h2 style="color: red">Logged in successfully!</h2>
+<h3>Hello: <span sec:authentication="principal.username"></span></h3>
+
+
 <div class="container-fluid">
     <div class="header">
 
         <div class="row">
             <div class="col-3">
                 <img style="width: 30%;padding: 5%"
-                     src="/image/logo.jfif">
+                     src="/image/logo.png">
 
             </div>
             <div class="col-3"></div>

@@ -20,7 +20,14 @@
 
 <h2>Add New Service</h2>
 
-<form th:action="@{/service/save}" th:object="${service}" method="post">
+<form th:action="@{/service/save}" th:object="${serviceDto}" method="post">
+    <div>
+        <label for="serviceCode">Service code: </label>
+        <input id="serviceCode" type="text" th:field="*{serviceCode}">
+        <div id="serviceCodeE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('serviceCode')}" th:errors="*{serviceCode}">
+        </div>
+    </div>
     <div>
         <label for="serviceName">Service Name:</label>
         <input id="serviceName" type="text" th:field="*{serviceName}">
@@ -32,6 +39,9 @@
     <div>
         <label for="serviceCost">Service Cost:</label>
         <input id="serviceCost" type="text" th:field="*{serviceCost}">
+        <div id="serviceCostE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('serviceCost')}" th:errors="*{serviceCost}">
+        </div>
     </div>
     <div>
         <label for="serviceMaxPeople">Service Max People:</label>
@@ -52,6 +62,9 @@
     <div>
         <label for="numberOfFloors">Number Of Floors:</label>
         <input id="numberOfFloors" type="text" th:field="*{numberOfFloors}">
+        <div id="numberOfFloorsE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('numberOfFloors')}" th:errors="*{numberOfFloors}">
+        </div>
     </div>
     <div>
         <label>Service Type:</label>
@@ -76,10 +89,6 @@
 
 <a th:href="@{/home}"> Return Home</a>
 
-<div style="color: red">
-    <th:block th:if="${message}">
-        <p th:text="${message}"></p>
-    </th:block>
-</div>
+
 </body>
 </html>

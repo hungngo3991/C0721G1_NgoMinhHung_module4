@@ -14,6 +14,8 @@ public class User {
 
     private String password;
 
+    public boolean isEnabled;
+
     @OneToOne(mappedBy = "user")
     private Employee employee;
 
@@ -57,5 +59,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
     }
 }

@@ -42,4 +42,12 @@ public class Role {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 }

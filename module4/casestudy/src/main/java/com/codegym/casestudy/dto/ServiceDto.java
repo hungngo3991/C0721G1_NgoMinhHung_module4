@@ -1,20 +1,31 @@
-package com.codegym.casestudy.model;
+package com.codegym.casestudy.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.codegym.casestudy.model.RentType;
+import com.codegym.casestudy.model.Service;
+import com.codegym.casestudy.model.ServiceType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-@Entity
-public class Service {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ServiceDto implements Validator {
     private Long serviceId;
 
+    @NotBlank(message = "Service Code cannot be blank")
+    @Pattern(regexp = "^(DV-)(\\d{4})$", message = "Service Code must be in the correct format: DV-XXXX")
     private String serviceCode;
 
     private String serviceName;
 
     private Integer serviceArea;
 
+    @NotNull(message = "Service Cost cannot be blank")
+    @Min(value = 1, message = "Service Cost must be a positive number")
     private Double serviceCost;
 
     private Integer serviceMaxPeople;
@@ -25,48 +36,20 @@ public class Service {
 
     private Double poolArea;
 
+    @NotNull(message = "Number of Floors cannot be blank")
+    @Min(value = 1, message = "Numbers of Floors must be a positive number")
     private Integer numberOfFloors;
 
-
-    @ManyToOne(targetEntity = ServiceType.class)
-    @JoinColumn(name = "service_type_id", referencedColumnName = "serviceTypeId")
     private ServiceType serviceType;
 
-
-    @ManyToOne(targetEntity = RentType.class)
-    @JoinColumn(name = "rent_type_id", referencedColumnName = "rentTypeId")
     private RentType rentType;
 
 
-    @OneToMany(mappedBy = "service")
-    private Set<Contract> contracts;
+    List<Service> services = new ArrayList<>();
 
-    public Service() {
-    }
+    private boolean checkCode;
 
-    public Service(Long serviceId, String serviceCode, String serviceName, Integer serviceArea, Double serviceCost, Integer serviceMaxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloors) {
-        this.serviceId = serviceId;
-        this.serviceCode = serviceCode;
-        this.serviceName = serviceName;
-        this.serviceArea = serviceArea;
-        this.serviceCost = serviceCost;
-        this.serviceMaxPeople = serviceMaxPeople;
-        this.standardRoom = standardRoom;
-        this.descriptionOtherConvenience = descriptionOtherConvenience;
-        this.poolArea = poolArea;
-        this.numberOfFloors = numberOfFloors;
-    }
-
-    public Service(String serviceCode, String serviceName, Integer serviceArea, Double serviceCost, Integer serviceMaxPeople, String standardRoom, String descriptionOtherConvenience, Double poolArea, Integer numberOfFloors) {
-        this.serviceCode = serviceCode;
-        this.serviceName = serviceName;
-        this.serviceArea = serviceArea;
-        this.serviceCost = serviceCost;
-        this.serviceMaxPeople = serviceMaxPeople;
-        this.standardRoom = standardRoom;
-        this.descriptionOtherConvenience = descriptionOtherConvenience;
-        this.poolArea = poolArea;
-        this.numberOfFloors = numberOfFloors;
+    public ServiceDto() {
     }
 
     public Long getServiceId() {
@@ -163,5 +146,38 @@ public class Service {
 
     public void setRentType(RentType rentType) {
         this.rentType = rentType;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Service> services) {
+        this.services = services;
+    }
+
+    public boolean isCheckCode() {
+        return checkCode;
+    }
+
+    public void setCheckCode(boolean checkCode) {
+        this.checkCode = checkCode;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        ServiceDto serviceDto = (ServiceDto) target;
+        for (Service service : services) {
+            if (serviceDto.checkCode) {
+                if (service.getServiceCode().equals(serviceDto.getServiceCode())) {
+                    errors.rejectValue("serviceCode", "serviceCode.equals", "Service Code already exists!");
+                }
+            }
+        }
     }
 }

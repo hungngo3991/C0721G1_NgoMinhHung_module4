@@ -1,55 +1,42 @@
-package com.codegym.casestudy.model;
+package com.codegym.casestudy.dto;
 
-import javax.persistence.*;
-import java.util.Set;
+import com.codegym.casestudy.model.Customer;
+import com.codegym.casestudy.model.Employee;
+import com.codegym.casestudy.model.Service;
 
-@Entity
-public class Contract {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+public class ContractDto {
     private Long contractId;
 
+    @NotBlank(message = "Contract Start Date cannot be blank")
+    @Pattern(regexp = "^(?:19\\d{2}|20\\d{2})[-/.](?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])$",
+            message = "Contract Start Date must be in the correct format: DD/MM/YYYY")
     private String contractStartDate;
 
+    @NotBlank(message = "Contract End Date cannot be blank")
+    @Pattern(regexp = "^(?:19\\d{2}|20\\d{2})[-/.](?:0[1-9]|1[012])[-/.](?:0[1-9]|[12][0-9]|3[01])$",
+            message = "Contract End Date must be in the correct format: DD/MM/YYYY")
     private String contractEndDate;
 
+    @NotNull(message = "Contract Deposit cannot be blank")
+    @Min(value = 1, message = "Contract Deposit must be a positive number")
     private Double contractDeposit;
 
+    @NotNull(message = "Total Money cannot be blank")
+    @Min(value = 1, message = "Total Money must be a positive number")
     private Double contractTotalMoney;
 
-
-    @ManyToOne(targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id", referencedColumnName = "customerId")
     private Customer customer;
 
-    @ManyToOne(targetEntity = Service.class)
-    @JoinColumn(name = "service_id", referencedColumnName = "serviceId")
     private Service service;
 
-    @ManyToOne(targetEntity = Employee.class)
-    @JoinColumn(name = "employee_id", referencedColumnName = "employeeId")
     private Employee employee;
 
-
-    @OneToMany(mappedBy = "contract")
-    private Set<ContractDetail> contractDetails;
-
-    public Contract() {
-    }
-
-    public Contract(Long contractId, String contractStartDate, String contractEndDate, Double contractDeposit, Double contractTotalMoney) {
-        this.contractId = contractId;
-        this.contractStartDate = contractStartDate;
-        this.contractEndDate = contractEndDate;
-        this.contractDeposit = contractDeposit;
-        this.contractTotalMoney = contractTotalMoney;
-    }
-
-    public Contract(String contractStartDate, String contractEndDate, Double contractDeposit, Double contractTotalMoney) {
-        this.contractStartDate = contractStartDate;
-        this.contractEndDate = contractEndDate;
-        this.contractDeposit = contractDeposit;
-        this.contractTotalMoney = contractTotalMoney;
+    public ContractDto() {
     }
 
     public Long getContractId() {

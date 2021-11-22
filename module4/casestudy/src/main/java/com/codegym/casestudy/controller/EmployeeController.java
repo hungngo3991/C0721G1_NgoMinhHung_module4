@@ -1,18 +1,24 @@
 package com.codegym.casestudy.controller;
 
 
+import com.codegym.casestudy.dto.CustomerDto;
+import com.codegym.casestudy.dto.EmployeeDto;
 import com.codegym.casestudy.model.*;
 
 import com.codegym.casestudy.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/employee")
@@ -79,45 +85,76 @@ public class EmployeeController {
     @GetMapping("/create")
     public ModelAndView createEmployeeForm() {
         ModelAndView modelAndView = new ModelAndView("/employee/create");
-        List<Position> positionList = positionService.findAll();
-        List<EducationDegree> educationDegreeList = educationDegreeService.findAll();
-        List<Division> divisionList = divisionService.findAll();
-        List<User> userList = userService.findAll();
-        modelAndView.addObject("employee", new Employee());
-        modelAndView.addObject("positionList", positionList);
-        modelAndView.addObject("educationDegreeList", educationDegreeList);
-        modelAndView.addObject("divisionList", divisionList);
-        modelAndView.addObject("userList", userList);
+        modelAndView.addObject("employeeDto", new EmployeeDto());
         return modelAndView;
     }
 
     @PostMapping("/save")
-    public ModelAndView save(@ModelAttribute Employee employee, @PageableDefault(value = 2) Pageable pageable) {
-        employeeService.save(employee);
-        ModelAndView modelAndView = new ModelAndView("/employee/create");
-        List<Employee> employees = employeeService.findAll();
-        modelAndView.addObject("employees", employees);
-        modelAndView.addObject("message", "Create a new successful employee!");
-        return modelAndView;
+    public String save(@Valid @ModelAttribute("employeeDto") EmployeeDto employeeDto, BindingResult bindingResult) {
+        employeeDto.setEmployees(employeeService.findAll());
+        employeeDto.setCheckIdCard(true);
+        employeeDto.setCheckPhone(true);
+        employeeDto.setCheckEmail(true);
+        employeeDto.validate(employeeDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            return "employee/create";
+        } else {
+            Employee employee = new Employee();
+            BeanUtils.copyProperties(employeeDto, employee);
+            employeeService.save(employee);
+            return "redirect:/employee";
+        }
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView showFormEdit(@PathVariable Long id) {
-
-        ModelAndView modelAndView = new ModelAndView("/employee/edit");
-        modelAndView.addObject("employee", employeeService.findById(id).get());
-
+        Optional<Employee> employee = employeeService.findById(id);
+        EmployeeDto employeeDto = new EmployeeDto();
+        BeanUtils.copyProperties(employee.get(), employeeDto);
+        ModelAndView modelAndView;
+        modelAndView = new ModelAndView("/employee/edit");
+        modelAndView.addObject("employeeDto", employeeDto);
         return modelAndView;
     }
 
     @PostMapping("/update")
-    public ModelAndView update(@ModelAttribute Employee employee) {
-        employeeService.save(employee);
-        List<Employee> employees = employeeService.findAll();
-        ModelAndView modelAndView = new ModelAndView("/employee/edit");
-        modelAndView.addObject("employees", employees);
-        modelAndView.addObject("message", "Update employee successful!");
-        return modelAndView;
+    public String update(@Valid @ModelAttribute("employeeDto") EmployeeDto employeeDto, BindingResult bindingResult) {
+        Optional<Employee> employeeOptional = employeeService.findById(employeeDto.getEmployeeId());
+        String oldIdCard = employeeOptional.get().getEmployeeIdCard();
+        String oldPhone = employeeOptional.get().getEmployeePhone();
+        String oldEmail = employeeOptional.get().getEmployeeEmail();
+
+        if (!oldIdCard.equals(employeeDto.getEmployeeIdCard())) {
+            employeeDto.setEmployees(employeeService.findAll());
+            employeeDto.setCheckIdCard(true);
+            employeeDto.setCheckEmail(false);
+            employeeDto.setCheckPhone(false);
+            employeeDto.validate(employeeDto, bindingResult);
+        }
+        if (!oldPhone.equals(employeeDto.getEmployeePhone())) {
+            employeeDto.setEmployees(employeeService.findAll());
+            employeeDto.setCheckIdCard(false);
+            employeeDto.setCheckEmail(false);
+            employeeDto.setCheckPhone(true);
+            employeeDto.validate(employeeDto, bindingResult);
+        }
+        if (!oldEmail.equals(employeeDto.getEmployeeEmail())) {
+            employeeDto.setEmployees(employeeService.findAll());
+            employeeDto.setCheckIdCard(false);
+            employeeDto.setCheckEmail(true);
+            employeeDto.setCheckPhone(false);
+            employeeDto.validate(employeeDto, bindingResult);
+        }
+
+
+        if (bindingResult.hasFieldErrors()) {
+            return "employee/edit";
+        } else {
+            Employee employee = new Employee();
+            BeanUtils.copyProperties(employeeDto, employee);
+            employeeService.save(employee);
+            return "redirect:/employee";
+        }
     }
 
     @GetMapping("/delete/{id}")

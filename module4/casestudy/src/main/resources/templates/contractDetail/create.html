@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Contract Detail</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h2>Add New Contract Detail</h2>
+
+<form th:action="@{/contractDetail/save}" th:object="${contractDetailDto}" method="post">
+    <div>
+        <label for="quantity">Quantity:</label>
+        <input id="quantity" type="text" th:field="*{quantity}">
+        <div id="quantityE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">
+        </div>
+    </div>
+    <div>
+        <label>Contract Id:</label>
+        <label>
+            <select th:field="*{contract.contractId}">
+                <option th:each="contract : ${contracts}" th:text="${contract.contractId}"
+                        th:value="${contract.contractId}"></option>
+            </select>
+        </label>
+    </div>
+    <div>
+        <label>Attach Service Name:</label>
+        <label>
+            <select th:field="*{attachService.attachServiceId}">
+                <option th:each="attachService : ${attachServices}" th:text="${attachService.attachServiceName}"
+                        th:value="${attachService.attachServiceId}"></option>
+            </select>
+        </label>
+    </div>
+    <input type="submit" value="Create">
+</form>
+
+<a th:href="@{/home}"> Return Home</a>
+
+
+</body>
+</html>

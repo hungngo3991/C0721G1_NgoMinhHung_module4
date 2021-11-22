@@ -20,22 +20,34 @@
 
 <h2>Add New Contract</h2>
 
-<form th:action="@{/contract/save}" th:object="${contract}" method="post">
+<form th:action="@{/contract/save}" th:object="${contractDto}" method="post">
     <div>
         <label for="contractStartDate">Contract Start Date:</label>
-        <input id="contractStartDate" type="text" th:field="*{contractStartDate}">
+        <input id="contractStartDate" type="date" th:field="*{contractStartDate}">
+        <div id="contractStartDateE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('contractStartDate')}" th:errors="*{contractStartDate}">
+        </div>
     </div>
     <div>
         <label for="contractEndDate">Contract End Date:</label>
-        <input id="contractEndDate" type="text" th:field="*{contractEndDate}">
+        <input id="contractEndDate" type="date" th:field="*{contractEndDate}">
+        <div id="contractEndDateE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('contractEndDate')}" th:errors="*{contractEndDate}">
+        </div>
     </div>
     <div>
         <label for="contractDeposit">Contract Deposit:</label>
         <input id="contractDeposit" type="text" th:field="*{contractDeposit}">
+        <div id="contractDepositE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('contractDeposit')}" th:errors="*{contractDeposit}">
+        </div>
     </div>
     <div>
         <label for="contractTotalMoney">Contract Total Money:</label>
         <input id="contractTotalMoney" type="text" th:field="*{contractTotalMoney}">
+        <div id="contractTotalMoneyE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('contractTotalMoney')}" th:errors="*{contractTotalMoney}">
+        </div>
     </div>
     <div>
         <label>Customer Name:</label>
@@ -69,10 +81,6 @@
 
 <a th:href="@{/home}"> Return Home</a>
 
-<div style="color: red">
-    <th:block th:if="${message}">
-        <p th:text="${message}"></p>
-    </th:block>
-</div>
+
 </body>
 </html>

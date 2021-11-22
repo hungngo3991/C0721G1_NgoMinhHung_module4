@@ -20,30 +20,48 @@
 
 <h2>Add New Employee</h2>
 
-<form th:action="@{/employee/save}" th:object="${employee}" method="post">
+<form th:action="@{/employee/save}" th:object="${employeeDto}" method="post">
     <div>
         <label for="employeeName">Employee Name:</label>
         <input id="employeeName" type="text" th:field="*{employeeName}">
+        <div id="employeeNameE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('employeeName')}" th:errors="*{employeeName}">
+        </div>
     </div>
     <div>
         <label for="employeeBirthday">Employee Birthday:</label>
-        <input id="employeeBirthday" type="text" th:field="*{employeeBirthday}">
+        <input id="employeeBirthday" type="date" th:field="*{employeeBirthday}">
+        <div id="employeeBirthdayE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('employeeBirthday')}" th:errors="*{employeeBirthday}">
+        </div>
     </div>
     <div>
         <label for="employeeIdCard">Employee Id Card:</label>
         <input id="employeeIdCard" type="text" th:field="*{employeeIdCard}">
+        <div id="employeeIdCardE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('employeeIdCard')}" th:errors="*{employeeIdCard}">
+        </div>
     </div>
     <div>
         <label for="employeeSalary">Employee Salary:</label>
         <input id="employeeSalary" type="text" th:field="*{employeeSalary}">
+        <div id="employeeSalaryE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('employeeSalary')}" th:errors="*{employeeSalary}">
+        </div>
     </div>
     <div>
         <label for="employeePhone">Employee Phone:</label>
         <input id="employeePhone" type="text" th:field="*{employeePhone}">
+        <div id="employeePhoneE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('employeePhone')}" th:errors="*{employeePhone}">
+        </div>
     </div>
     <div>
         <label for="employeeEmail">Employee Email:</label>
         <input id="employeeEmail" type="text" th:field="*{employeeEmail}">
+        <div id="employeeEmailE" class="form-text text-danger"
+             th:if="${#fields.hasErrors('employeeEmail')}" th:errors="*{employeeEmail}">
+        </div>
     </div>
     <div>
         <label for="employeeAddress">Employee Address:</label>
@@ -81,10 +99,6 @@
 
 <a th:href="@{/employee}"> Return Employee List</a>
 
-<div style="color: red">
-    <th:block th:if="${message}">
-        <p th:text="${message}"></p>
-    </th:block>
-</div>
+
 </body>
 </html>
