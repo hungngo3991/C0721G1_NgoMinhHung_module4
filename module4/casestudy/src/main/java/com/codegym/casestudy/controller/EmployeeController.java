@@ -1,7 +1,6 @@
 package com.codegym.casestudy.controller;
 
 
-import com.codegym.casestudy.dto.CustomerDto;
 import com.codegym.casestudy.dto.EmployeeDto;
 import com.codegym.casestudy.model.*;
 
@@ -38,6 +37,9 @@ public class EmployeeController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IRoleService roleService;
 
 
     @ModelAttribute("positions")
@@ -91,6 +93,20 @@ public class EmployeeController {
 
     @PostMapping("/save")
     public String save(@Valid @ModelAttribute("employeeDto") EmployeeDto employeeDto, BindingResult bindingResult) {
+//        List<Role> roles = roleService.findAll();
+//        User user = userService.findByUsername(employeeDto.getUser().getUsername());
+//        employeeDto.getUser().setUserId(user.getUserId());
+//        if (employeeDto.getPosition().getPositionId() == 5 || employeeDto.getPosition().getPositionId() == 6) {
+//            for (Role role : roles) {
+//                userService.addUserRole(employeeDto.getUser().getUserId(), role.getRoleId());
+//            }
+//        } else {
+//            for (Role role : roles) {
+//                if (role.getRoleId() == 1) {
+//                    userService.addUserRole(employeeDto.getUser().getUserId(), role.getRoleId());
+//                }
+//            }
+//        }
         employeeDto.setEmployees(employeeService.findAll());
         employeeDto.setCheckIdCard(true);
         employeeDto.setCheckPhone(true);
@@ -119,7 +135,9 @@ public class EmployeeController {
 
     @PostMapping("/update")
     public String update(@Valid @ModelAttribute("employeeDto") EmployeeDto employeeDto, BindingResult bindingResult) {
+//        List<Employee> employees = employeeService.findAll();
         Optional<Employee> employeeOptional = employeeService.findById(employeeDto.getEmployeeId());
+//        employeeDto.setUser(employeeOptional.get().getUser());
         String oldIdCard = employeeOptional.get().getEmployeeIdCard();
         String oldPhone = employeeOptional.get().getEmployeePhone();
         String oldEmail = employeeOptional.get().getEmployeeEmail();

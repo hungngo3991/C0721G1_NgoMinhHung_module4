@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Employee List</title>
@@ -17,7 +17,17 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<a th:href="@{/employee/create}"> Add New Employee</a>
+<!--<a th:href="@{/employee/create}"> Add New Employee</a>-->
+
+<div>
+    <h5 class="navbar-text" style="float: right">
+        Logged by: <span sec:authentication="name"></span>
+    </h5>
+</div>
+<a th:href="@{/employee/create}">
+    Add New Employee
+</a>
+
 <form>
     <label>
         <input type="search" name="employeeName" placeholder="Search By Name">
@@ -50,6 +60,7 @@
         <th>Division</th>
         <th>Edit</th>
         <th>Delete</th>
+
     </tr>
     </thead>
     <tbody>
@@ -70,12 +81,14 @@
                 <button class="btn btn-primary">Edit
                 </button>
             </a>
+
         </td>
         <td>
             <a th:href="@{/employee/delete/{id}(id=${employee.employeeId})}">
                 <button class="btn btn-primary">Delete
                 </button>
             </a>
+
         </td>
     </tr>
     </tbody>

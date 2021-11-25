@@ -15,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.validation.Valid;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -149,14 +151,26 @@ public class CustomerController {
         }
     }
 
+//
+//    @GetMapping("/delete")
+//    public ModelAndView delete(@RequestParam Long id, @PageableDefault(value = 2) Pageable pageable,
+//                               @RequestParam(value = "customerName", defaultValue = "", required = false) String customerName,
+//                               @RequestParam(value = "customerPhone", defaultValue = "", required = false) String customerPhone,
+//                               @RequestParam(value = "customerTypeId", defaultValue = "", required = false) String customerTypeId) {
+//        customerService.remove(id);
+//        Page<Customer> customers = customerService.findAll(pageable, customerName, customerPhone, customerTypeId);
+//        ModelAndView modelAndView = new ModelAndView("/customer/list");
+//        modelAndView.addObject("customerName", customerName);
+//        modelAndView.addObject("customerPhone", customerPhone);
+//        modelAndView.addObject("customerTypeId", customerTypeId);
+//        modelAndView.addObject("customers", customers);
+//        return modelAndView;
+//    }
 
-    @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable Long id, @PageableDefault(value = 2) Pageable pageable,
-                               @RequestParam(value = "customerName", defaultValue = "", required = false) String customerName,
-                               @RequestParam(value = "customerPhone", defaultValue = "", required = false) String customerPhone,
-                               @RequestParam(value = "customerTypeId", defaultValue = "", required = false) String customerTypeId) {
+    @GetMapping("/delete")
+    public String delete(@RequestParam Long id) {
         customerService.remove(id);
-        return getList(pageable, customerName, customerPhone, customerTypeId);
+        return "redirect:/customer";
     }
 
 

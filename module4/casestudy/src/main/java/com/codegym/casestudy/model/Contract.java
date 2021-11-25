@@ -31,7 +31,7 @@ public class Contract {
     private Employee employee;
 
 
-    @OneToMany(mappedBy = "contract")
+    @OneToMany(mappedBy = "contract",cascade = CascadeType.ALL)
     private Set<ContractDetail> contractDetails;
 
     public Contract() {
